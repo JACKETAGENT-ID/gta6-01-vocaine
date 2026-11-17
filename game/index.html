@@ -1,19 +1,73 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Block Dodger</title>
-<style>
-  html, body { margin: 0; height: 100%; overflow: hidden; background: #11141b; }
-  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
-  /* Read aloud, never shown: the status line screen readers announce. */
-  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-</style>
+<link rel="icon" href="data:,">
+<title>Isla Verde — Open-World Crime</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="game" aria-label="Block Dodger: move the paddle left and right to dodge falling blocks and catch coins"></canvas>
-<p id="status" role="status" aria-live="polite"></p>
-<script type="module" src="./src/main.js"></script>
+<div id="wrap">
+  <canvas id="game" width="1280" height="800"></canvas>
+
+  <div id="hud" class="hidden">
+    <div id="hud-top-left">
+      <div id="cash">$0</div>
+      <div id="health-bar"><div id="health-fill"></div><span id="health-text">100</span></div>
+      <div id="ammo">Pistol — 24 peluru</div>
+      <div id="time-label">10:00 — Pagi</div>
+    </div>
+    <div id="hud-top-right">
+      <div id="wanted"></div>
+      <div id="radio-label">RADIO: Suara Pantai FM</div>
+    </div>
+    <div id="objective"><span id="objective-title">Bebas</span><span id="objective-text">Jelajahi Isla Verde. Cari misi di peta.</span></div>
+    <div id="minimap-wrap"><canvas id="minimap" width="200" height="200"></canvas><div id="minimap-label">ISLA VERDE</div></div>
+    <div id="speedo" class="hidden"><span id="speed-num">0</span><span id="speed-unit">km/j</span><div id="vehicle-name">Sedan</div></div>
+    <div id="toast"></div>
+    <div id="dialog" class="hidden">
+      <div id="dialog-speaker">MARA</div>
+      <div id="dialog-text"></div>
+      <div id="dialog-hint">Tekan E untuk lanjut</div>
+    </div>
+    <div id="interact" class="hidden">Tekan E</div>
+    <div id="mission-banner" class="hidden"><div id="mission-banner-title"></div><div id="mission-banner-sub"></div></div>
+    <div id="arrest" class="hidden"><div class="big">TERTANGKAP!</div><div>Kau ditahan Polisi Isla Verde. Denda $300.</div><div class="hint">Tekan Enter untuk lanjut</div></div>
+    <div id="wasted" class="hidden"><div class="big">TERLUKA PARAH</div><div>Kau dirawat di klinik. Biaya $200.</div><div class="hint">Tekan Enter untuk lanjut</div></div>
+  </div>
+
+  <div id="start-screen">
+    <div class="title-block">
+      <div class="game-title">ISLA VERDE</div>
+      <div class="game-sub">PULAU · PELABUHAN · PENYELUNDUPAN</div>
+      <div class="game-tag">Open-world crime di pulau tropis. Jalan kaki, curi mobil, kabur naik perahu, dan selesaikan 6 misi untuk Mara si kurir.</div>
+    </div>
+    <div class="menu">
+      <button id="btn-new">MULAI BARU</button>
+      <button id="btn-continue">LANJUTKAN</button>
+      <button id="btn-how">CARA MAIN</button>
+    </div>
+    <div id="howto" class="hidden">
+      <b>Kontrol:</b> WASD / panah — gerak &amp; mengemudi &nbsp;·&nbsp; Shift — lari &nbsp;·&nbsp; E — masuk/curi kendaraan, bicara, ambil &nbsp;·&nbsp; Spasi — pukul &nbsp;·&nbsp; Klik mouse — tembak pistol &nbsp;·&nbsp; R — ganti radio &nbsp;·&nbsp; M — peta besar &nbsp;·&nbsp; Esc — jeda &amp; simpan &nbsp;·&nbsp; H — klakson<br>
+      <b>Aturan:</b> kejahatan menaikkan bintang buronan (0–5). Polisi mengejar di darat, Coast Guard di laut. Roadblock muncul di bintang 3+. Cari 20 peti harta karun tersembunyi di pantai, jungle, dan desa.
+    </div>
+    <div class="save-line" id="save-line"></div>
+    <div class="credit">Game orisinal — dibuat dari nol. Bukan bagian dari seri game komersial mana pun.</div>
+  </div>
+
+  <div id="pause-screen" class="hidden">
+    <div class="pause-title">JEDA</div>
+    <div class="menu">
+      <button id="btn-resume">LANJUT MAIN</button>
+      <button id="btn-save">SIMPAN GAME</button>
+      <button id="btn-quit">KELUAR KE MENU</button>
+    </div>
+    <div class="save-line" id="pause-save-line"></div>
+  </div>
+
+  <div id="bigmap" class="hidden"><canvas id="bigmap-canvas" width="760" height="760"></canvas><div class="hint">Tekan M / Esc untuk menutup</div></div>
+</div>
+<script type="module" src="js/game.js"></script>
 </body>
 </html>
